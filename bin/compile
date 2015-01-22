@@ -12,10 +12,6 @@ UBUNTU_CODENAME=$(lsb_release -cs)
 
 PACKAGE_URL=http://mirrors.kernel.org/ubuntu/pool/universe/a/arj/arj_${VERSION}_${ARCH}.deb
 
-echo "$UBUNTU_CODENAME"
-echo "$ARCH"
-echo "$PACKAGE_URL"
-
 # Buildpack URL
 ARCHIVE_NAME=arj-${VERSION}-${ARCH}
 FILE_NAME=${ARCHIVE_NAME}.deb
@@ -29,7 +25,7 @@ fi
 echo "-----> Extracting ARJ ${VERSION} binaries to ${BUILD_DIR}/vendor/arj"
 mkdir -p $CACHE_DIR/arj
 mkdir -p $BUILD_DIR/vendor
-ar p $CACHE_DIR/$FILE_NAME data.tar.gz  | tar zxv -C $CACHE_DIR/arj
+ar p $CACHE_DIR/$FILE_NAME data.tar.gz  | tar zx -C $CACHE_DIR/arj
 mv $CACHE_DIR/arj $BUILD_DIR/vendor/arj
 
 echo "-----> exporting PATH and LIBRARY_PATH"
