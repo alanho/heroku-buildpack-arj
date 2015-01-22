@@ -1,7 +1,7 @@
 Heroku buildpack: ARJ
 =======================
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) of ARJ compression
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) of ARJ compression. This buildpack will install ARJ binary (from ubuntu package) to $PATH
 
 Usage
 -----
