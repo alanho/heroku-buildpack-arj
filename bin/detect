@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "arj"
+exit 0

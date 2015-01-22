@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -e
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+UBUNTU_CODENAME=$(lsb_release -cs)
+
+[ "$UBUNTU_CODENAME" = "lucid" ] && VERSION="3.10.22-8" || VERSION="3.10.22-11"
+[ "$(uname -m)" = "x86_64" ] && ARCH="amd64" || ARCH="i386"
+
+PACKAGE_URL=http://mirrors.kernel.org/ubuntu/pool/universe/a/arj/arj_${VERSION}_${ARCH}.deb
+
+echo "$UBUNTU_CODENAME"
+echo "$ARCH"
+echo "$PACKAGE_URL"
+
+# Buildpack URL
+ARCHIVE_NAME=arj-${VERSION}-${ARCH}
+FILE_NAME=${ARCHIVE_NAME}.deb
+
+mkdir -p $CACHE_DIR
+if ! [ -e $CACHE_DIR/$FILE_NAME ]; then
+  echo "-----> Fetching ARJ ${VERSION} binaries at ${PACKAGE_URL}"
+  curl $PACKAGE_URL -L -s -o $CACHE_DIR/$FILE_NAME
+fi
+
+echo "-----> Extracting ARJ ${VERSION} binaries to ${BUILD_DIR}/vendor/arj"
+mkdir -p $CACHE_DIR/arj
+mkdir -p $BUILD_DIR/vendor
+ar p $CACHE_DIR/$FILE_NAME data.tar.gz  | tar zxv -C $CACHE_DIR/arj
+mv $CACHE_DIR/arj $BUILD_DIR/vendor/arj
+
+echo "-----> exporting PATH and LIBRARY_PATH"
+PROFILE_PATH="$BUILD_DIR/.profile.d/arj.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="$PATH:vendor/arj/usr/bin"' >> $PROFILE_PATH

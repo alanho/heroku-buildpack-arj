@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cat << EOF
+---
+config_vars:
+  PATH: "/usr/local/bin:/usr/bin:/bin:/app/vendor/arj/usr/bin"
+default_process_types:
+  console: "vendor/arj/usr/bin/arj"
+EOF
