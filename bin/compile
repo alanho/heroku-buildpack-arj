@@ -31,4 +31,4 @@ mv $CACHE_DIR/arj $BUILD_DIR/vendor/arj
 echo "-----> exporting PATH and LIBRARY_PATH"
 PROFILE_PATH="$BUILD_DIR/.profile.d/arj.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="$PATH:vendor/arj/usr/bin"' >> $PROFILE_PATH
+echo 'export PATH="$PATH:/app/vendor/arj/usr/bin"' >> $PROFILE_PATH
